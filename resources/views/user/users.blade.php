@@ -2,9 +2,9 @@
     <x-slot name="header">
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Students') }}
+                {{ __('Users') }}
             </h2>
-            <a href="{{route('create')}}" class="btn btn-sm btn-primary">Add Student</a>
+            <a href="{{route('user.create')}}" class="btn btn-sm btn-primary">Add User</a>
         </div>
     </x-slot>
 
@@ -16,32 +16,30 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>First name</th>
-                                <th>Last name</th>
-                                <th>Gender</th>
-                                <th>Address</th>
-                                <th>City</th>
-                                <th>State</th>
-                                <th>Zip</th>
+                                <th>name</th>
+                                <th>Email</th>
+                                <th>Role</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if (isset($students))
-                                @foreach ($students as $student)
+                            @if (isset($users))
+                                @foreach ($users as $user)
                                     
                                 <tr>
                                     <td>{{ $loop->index+1 }}</td>
-                                    <td>{{ $student->first_name }}</td>
-                                    <td>{{ $student->last_name }}</td>
-                                    <td>{{ $student->gender }}</td>
-                                    <td>{{ $student->address }}</td>
-                                    <td>{{ $student->city }}</td>
-                                    <td>{{ ucwords(Str::lower($student->state)) }}</td>
-                                    <td>{{ $student->zip }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>
+                                        @foreach ($user->roles as $role)
+                                            {{ $role->name }} {{ !$loop->last ? ', ' : ''}}
+                                        @endforeach
+                                    </td>
+                                    
                                     <td class="flex align-items-center flex-direction-column">
-                                        <a href="update/{{ $student->id }}" class="btn btn-primary m-2">Edit</a>
-                                        <form action="{{ route('delete', $student->id) }}" method="post" class="m-2">
+                                        <a href="{{ route( 'user.edit', $user->id) }}" class="btn btn-primary m-2">Edit</a>
+                                        <a href="{{ route( 'user.view', $user->id) }}" class="btn btn-success m-2">View</a>
+                                        <form action="{{ route('user.delete', $user->id) }}" method="GET" class="m-2 d-inline">
                                             @csrf
                                             <button type="submit" class="btn btn-danger" onclick="return confirm('{{ __('Are you sure you want to delete?') }}')">Delete</button>
                                         </form>
