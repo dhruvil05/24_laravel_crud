@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +42,14 @@ Route::middleware('auth')->group(function () {
     Route::post('delete/{id}', [StudentController::class, 'delete'])->name('delete');
 
     Route::get('timer', function(){return view('timer');})->name('timer');
+
+    Route::get('users', [UserController::class, 'index'])->name('users');
+    Route::get('users/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('users/create', [UserController::class, 'store'])->name('user.store');
+    Route::get('users/edit/{id?}', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('users/edit/{id?}', [UserController::class, 'update'])->name('user.update');
+    Route::get('users/delete/{id?}', [UserController::class, 'destroy'])->name('user.delete');
+    Route::get('users/view/{id?}', [UserController::class, 'show'])->name('user.view');
 });
 
 require __DIR__.'/auth.php';

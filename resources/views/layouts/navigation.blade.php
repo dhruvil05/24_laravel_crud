@@ -17,15 +17,15 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('create')" :active="request()->routeIs('create')">
-                        {{ __('Create') }}
+                    <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
+                        {{ __('Users') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('timer')" :active="request()->routeIs('timer')">
                         {{ __('Timer') }}
                     </x-nav-link>
-                </div>
+                </div> --}}
             </div>
 
             <!-- Settings Dropdown -->

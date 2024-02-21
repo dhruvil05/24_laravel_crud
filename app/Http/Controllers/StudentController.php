@@ -29,13 +29,15 @@ class StudentController extends Controller
 
         if($validated){
 
+            $stateId = State::where('name', $request->state)->get('id');
+
             $student = new Student();
             $student->first_name = $request->firstName;
             $student->last_name = $request->lastName;
             $student->gender = $request->gender;
             $student->address = $request->address;
             $student->city = $request->city;
-            $student->state = $request->state;
+            $student->state = $stateId[0]->id;
             $student->zip = $request->zip;
 
             if(!$student->save()){
@@ -47,7 +49,11 @@ class StudentController extends Controller
     }
 
     public function getStudentData($id){
+        
         $student = Student::find($id)->first();
+        $state = State::where('id', (int)$student->state)->first('name');
+        $student->state = $state->name;
+        
         $states = State::all();
 
         return view('update', ['student'=>$student, 'states'=> $states]);
@@ -67,6 +73,7 @@ class StudentController extends Controller
         ]);
 
         if($validated){
+            $stateId = State::where('name', $request->state)->get('id');
 
             $student = Student::find($request->studentId)->first();
             $student->first_name = $request->firstName;
@@ -74,7 +81,7 @@ class StudentController extends Controller
             $student->gender = $request->gender;
             $student->address = $request->address;
             $student->city = $request->city;
-            $student->state = $request->state;
+            $student->state = $stateId[0]->id;
             $student->zip = $request->zip;
 
             if(!$student->save()){
