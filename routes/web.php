@@ -33,31 +33,35 @@ Route::get('/test', function(){
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
     
     Route::get('timer', function(){return view('timer');})->name('timer');
     
     Route::get('users', [UserController::class, 'index'])->name('users');
-    
-    Route::group(['middleware'=>['auth', 'roles:Admin']], function(){
-
-        Route::get('create', [StudentController::class, 'index'])->name('create');
-        Route::post('create', [StudentController::class, 'store'])->name('store');
-        Route::get('update/{id}', [StudentController::class, 'getStudentData'])->name('getStudent');
-        Route::post('update/{id?}', [StudentController::class, 'update'])->name('update');
-        Route::post('delete/{id}', [StudentController::class, 'delete'])->name('delete');
-
-        Route::get('users/create', [UserController::class, 'create'])->name('user.create');
-        Route::post('users/create', [UserController::class, 'store'])->name('user.store');
-    });
-    
-    Route::group(['middleware'=>['auth', 'roles:SuperAdmin']], function(){
-        Route::get('users/edit/{id?}', [UserController::class, 'edit'])->name('user.edit');
-        Route::put('users/edit/{id?}', [UserController::class, 'update'])->name('user.update');
-        Route::get('users/delete/{id?}', [UserController::class, 'destroy'])->name('user.delete');
-    });
     Route::get('users/view/{id?}', [UserController::class, 'show'])->name('user.view');
-});
+    
+    Route::group(['middleware'=>['roles:SuperAdmin,Admin,Tester']], function(){
+        Route::group(['middleware'=>['roles:SuperAdmin,Admin']], function(){
 
+            Route::get('create', [StudentController::class, 'index'])->name('create');
+            Route::post('create', [StudentController::class, 'store'])->name('store');
+            Route::get('update/{id}', [StudentController::class, 'getStudentData'])->name('getStudent');
+            Route::post('update/{id?}', [StudentController::class, 'update'])->name('update');
+
+            Route::get('users/create', [UserController::class, 'create'])->name('user.create');
+            Route::post('users/create', [UserController::class, 'store'])->name('user.store');
+            Route::get('users/edit/{id?}', [UserController::class, 'edit'])->name('user.edit');
+            Route::put('users/edit/{id?}', [UserController::class, 'update'])->name('user.update');
+
+            Route::group(['middleware'=>['roles:SuperAdmin']], function(){
+                Route::post('delete/{id}', [StudentController::class, 'delete'])->name('delete');
+
+                Route::get('users/delete/{id?}', [UserController::class, 'destroy'])->name('user.delete');
+
+                Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+            });
+        });
+    });
+});
+// 
 require __DIR__.'/auth.php';
