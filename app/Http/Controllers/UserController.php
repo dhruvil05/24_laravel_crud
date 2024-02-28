@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserCreated;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -43,6 +44,9 @@ class UserController extends Controller
         $user = User::create($request->all());
 
         $user->roles()->attach($request->input('roles'));
+
+        $data = ['name'=>$user->name, 'roles'=>$user->roles, 'email'=>$user->email];
+        event(new UserCreated($data));
 
         return redirect()->route('users')->with('success', 'User created successfully!');
     }

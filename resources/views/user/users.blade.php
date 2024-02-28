@@ -36,7 +36,7 @@
                                         @endforeach
                                     </td>
                                     @php
-                                        $hide = array('SuperAdmin', 'Admin');
+                                        $hide = array('SuperAdmin');
                                         $userroles = $user->roles->pluck('name')->toArray();
                                     @endphp
                                     <td class="">
