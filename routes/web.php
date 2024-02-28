@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
@@ -36,8 +37,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     
-    Route::get('timer', function(){return view('timer');})->name('timer');
-    
+    Route::get('timer', [AttendanceController::class, 'index'])->name('timer');
+    Route::post('timer/check-in', [AttendanceController::class, 'checkIn'])->name('timer.start');
+
+
     Route::get('users', [UserController::class, 'index'])->name('users');
     
     Route::group(['middleware'=>['auth', 'roles:Admin']], function(){
