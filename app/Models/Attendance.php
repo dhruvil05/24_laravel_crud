@@ -11,11 +11,12 @@ class Attendance extends Model
 
     protected $fillable = [
         'user',
-        'date'=> "date:d/m/Y",
+        'date'=> "date:d-m-Y",
         'check_in',
         'check_out',
         'break',
         'description',
+        'status',
     ];
 
     protected $table = 'attendances';

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->date('date')->useCurrent();
-            $table->timestamp('check_in')->useCurrent()->nullable();
-            $table->timestamp('check_out')->useCurrent()->nullable();
-            $table->timestamp('break')->useCurrent()->nullable();
+            $table->date('date');
+            $table->time('check_in')->nullable();
+            $table->time('check_out')->nullable();
+            $table->time('break')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });

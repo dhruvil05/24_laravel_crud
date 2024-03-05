@@ -38,7 +38,8 @@ Route::middleware('auth')->group(function () {
 
     
     Route::get('timer', [AttendanceController::class, 'index'])->name('timer');
-    Route::post('timer/check-in', [AttendanceController::class, 'checkIn'])->name('timer.start');
+    Route::post('timer/check-in', [AttendanceController::class, 'clocking'])->name('timer.clocking');
+    // Route::post('timer/check-in', [AttendanceController::class, 'clocking'])->name('timer.stop');
 
 
     Route::get('users', [UserController::class, 'index'])->name('users');
