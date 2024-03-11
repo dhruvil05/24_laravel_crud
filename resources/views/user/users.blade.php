@@ -40,7 +40,7 @@
                                         $userroles = $user->roles->pluck('name')->toArray();
                                     @endphp
                                     <td class="">
-                                        @if (!array_intersect($userroles, $hide))
+                                        @if ($user->id !== 1)
                                             <a href="{{ route( 'user.edit', $user->id) }}" class="btn btn-primary m-2">Edit</a>
                                             <a href="{{ route( 'user.view', $user->id) }}" class="btn btn-success m-2">View</a>
                                             <form action="{{ route('user.delete', $user->id) }}" method="GET" class="d-inline">
